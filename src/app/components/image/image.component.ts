@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [MatCardModule, MatButtonModule, MatIconModule],
   template: `
     <mat-card class="cat-card">
-        <img mat-card-image [src]="source" alt="Picture of cat">
+        <img style="width: 350px; height: 350px;" mat-card-image [src]="source" alt="Picture of cat">
         <mat-card-actions style="justify-content: center;">
             <div class="favorite-button-container">
                 <button mat-fab color="accent" aria-label="favorite icon">
@@ -22,8 +22,6 @@ import { MatIconModule } from '@angular/material/icon';
   styles: `
     .cat-card {
         max-width: 400px;
-        width: calc(100% - 70px);
-        height: calc(100% - 70px);
     }
 
     .favorite-button-container {

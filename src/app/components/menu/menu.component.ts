@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,27 +10,24 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [MatToolbarModule, MatMenuModule, MatButtonModule, MatIconModule],
   template: `
     <mat-toolbar color="primary">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu with home page and dashboard rating">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu with items">
             <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
+        @for (item of items; track items) {
             <button mat-menu-item>
-                <mat-icon>home</mat-icon>
-                <span>Voting System</span>
+                <mat-icon>{{item.iconName}}</mat-icon>
+                <span>{{item.name}}</span>
             </button>
-            <button mat-menu-item>
-                <mat-icon>bar_chart_4_bars</mat-icon>
-                <span>Dashboard</span>
-            </button>
+        }
         </mat-menu>
-        <span>Cat Mash</span>
+        <span>{{title}}</span>
         <span class="spacer"></span>
-        <button mat-icon-button aria-label="heart icon">
-            <mat-icon>favorite</mat-icon>
-        </button>
-        <button mat-icon-button aria-label="share icon">
-            <mat-icon>share</mat-icon>
-        </button>
+        @for (action of actions; track actions) {
+            <button mat-icon-button aria-label=" action button icon" (click)="action.clickEvent()">
+                <mat-icon>{{action.iconName}}</mat-icon>
+            </button>
+        }
     </mat-toolbar>
   `,
   styles: `
@@ -40,4 +37,18 @@ import { MatIconModule } from '@angular/material/icon';
   `
 })
 export class MenuComponent {
+
+    @Input() items: MenuItem[] = [
+        { iconName: 'home', name: 'Voting System' },
+        { iconName: 'bar_chart_4_bars', name: 'Dashboard' }
+    ];
+
+    @Input() title: string = 'Cat Mash';
+
+    @Input() actions: MenuAction[] = [
+        { iconName: 'share', clickEvent: () => window.location.href = 'https://github.com/ranushan' }
+    ];
 }
+
+export type MenuItem = { iconName: string, name: string }
+export type MenuAction = { iconName: string, clickEvent: () => void }
