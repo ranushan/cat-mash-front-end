@@ -3,11 +3,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [MatToolbarModule, MatMenuModule, MatButtonModule, MatIconModule],
+  imports: [MatToolbarModule, MatMenuModule, MatButtonModule, MatIconModule, RouterModule],
   template: `
     <mat-toolbar color="primary">
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu with items">
@@ -15,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
         </button>
         <mat-menu #menu="matMenu">
         @for (item of items; track items) {
-            <button mat-menu-item>
+            <button mat-menu-item [routerLink]="item.routerLink">
                 <mat-icon>{{item.iconName}}</mat-icon>
                 <span>{{item.name}}</span>
             </button>
@@ -24,7 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
         <span>{{title}}</span>
         <span class="spacer"></span>
         @for (action of actions; track actions) {
-            <button mat-icon-button aria-label=" action button icon" (click)="action.clickEvent()">
+            <button mat-icon-button aria-label="action button icon" (click)="action.clickEvent()">
                 <mat-icon>{{action.iconName}}</mat-icon>
             </button>
         }
@@ -37,18 +38,10 @@ import { MatIconModule } from '@angular/material/icon';
   `
 })
 export class MenuComponent {
-
-    @Input() items: MenuItem[] = [
-        { iconName: 'home', name: 'Voting System' },
-        { iconName: 'bar_chart_4_bars', name: 'Dashboard' }
-    ];
-
-    @Input() title: string = 'Cat Mash';
-
-    @Input() actions: MenuAction[] = [
-        { iconName: 'share', clickEvent: () => window.location.href = 'https://github.com/ranushan' }
-    ];
+    @Input() items!: MenuItem[];
+    @Input() title!: string;
+    @Input() actions!: MenuAction[];
 }
 
-export type MenuItem = { iconName: string, name: string }
+export type MenuItem = { iconName: string, name: string, routerLink: string }
 export type MenuAction = { iconName: string, clickEvent: () => void }
