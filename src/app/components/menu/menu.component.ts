@@ -38,10 +38,11 @@ import { RouterModule } from '@angular/router';
   `
 })
 export class MenuComponent {
-    @Input() items!: MenuItem[];
-    @Input() title!: string;
-    @Input() actions!: MenuAction[];
+    @Input() items!: MenuItem[]; // Header => Menu item available from Left side
+    @Input() title!: string; // Header for Title
+    @Input() actions!: MenuAction[]; // Header => Actions available from Right side
 }
 
+// TYPING
 export type MenuItem = { iconName: string, name: string, routerLink: string }
 export type MenuAction = { iconName: string, clickEvent: () => void }

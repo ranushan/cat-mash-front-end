@@ -12,13 +12,16 @@ import { MenuAction, MenuComponent, MenuItem } from '@components/menu/menu.compo
 })
 export class AppComponent {
 
+    // Header => Adding Menu on the left side home menu and leaderboard
     items: MenuItem[] = [
         { iconName: 'home', name: 'Voting System', routerLink: 'voting' },
-        { iconName: 'bar_chart_4_bars', name: 'Dashboard', routerLink: 'stats' },
+        { iconName: 'bar_chart_4_bars', name: 'Leaderboard', routerLink: 'stats' },
     ];
 
+    // Header => Title
     title: string = 'Cat Mash';
 
+    // Header => Adding to my own github website
     actions: MenuAction[] = [
         { iconName: 'share', clickEvent: () => window.location.href = 'https://github.com/ranushan' }
     ];
