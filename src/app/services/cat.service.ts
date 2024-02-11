@@ -1,10 +1,10 @@
 import { Injectable, inject } from "@angular/core";
-import { Observable, map } from "rxjs";
+import { Observable } from "rxjs";
 import { Cat } from "@models/cat.model";
 import { HttpClient } from "@angular/common/http";
 
 // URL api
-const API_URL : string = 'http://localhost:8080/api';
+const API_URL : string = 'https://cat-mash-back-end.onrender.com/api';
 
 @Injectable()
 export class CatService {
@@ -17,8 +17,7 @@ export class CatService {
      * @returns List of Cats
      */
     getAllCatPictures(): Observable<Array<Cat>> {
-        return  this.httpClient.get<Images>('../../assets/cats.json')
-                    .pipe(map(r => r.images));
+        return this.httpClient.get<Array<Cat>>(`${API_URL}/cats`);
     }
 
     /**
@@ -30,6 +29,3 @@ export class CatService {
         return  this.httpClient.post<void>(`${API_URL}/cats`, id);
     }
 }
-
-// Util for returning all cats
-type Images = { images: Cat[] };
