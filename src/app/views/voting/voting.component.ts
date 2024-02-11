@@ -1,24 +1,32 @@
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { ImageComponent } from '@components/image/image.component';
 import { Cat } from '@models/cat.model';
 import { CatService } from '@services/cat.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-voting',
   standalone: true,
-  imports: [HttpClientModule, ImageComponent],
+  imports: [HttpClientModule, ImageComponent, MatProgressSpinnerModule],
   providers: [CatService],
   template: `
-    <div style="display: flex; justify-content: center;">
-      <img style="width: 10%;" src="assets/cat_cutest.jpg" alt="Cutest picture of cat">
-    </div>
-    <h1 style="display: flex; justify-content: center;">Voting for your favorite cat !!!</h1>
-    <div style="display: flex; gap: 4em; justify-content: center;">
-        <app-image [cat]="leftCat"  (catLiked)="voteCatPicture($event)"></app-image>
-        <app-image [cat]="rightCat" (catLiked)="voteCatPicture($event)"></app-image>
-    </div>
+    @if(!dataLoading) {
+      <div style="display: flex; justify-content: center;">
+        <img style="width: 10%;" src="assets/cat_cutest.jpg" alt="Cutest picture of cat">
+      </div>
+      <h1 style="display: flex; justify-content: center;">Voting for your favorite cat !!!</h1>
+      <div style="display: flex; gap: 4em; justify-content: center;">
+          <app-image [cat]="leftCat"  (catLiked)="voteCatPicture($event)"></app-image>
+          <app-image [cat]="rightCat" (catLiked)="voteCatPicture($event)"></app-image>
+      </div>
+    } @else {
+      <div style="display: flex; justify-content: center; align-items: center; text-align: center; min-height: 100vh;">
+        <mat-spinner></mat-spinner>
+      </div>
+    }
   `
 })
 export class VotingComponent implements OnInit {
@@ -26,6 +34,7 @@ export class VotingComponent implements OnInit {
   // DECLARATION VARIABLES
   leftCat!: Cat;
   rightCat!: Cat;
+  dataLoading = false;
 
   // STORING VALUE
   private cats!: Cat[];
@@ -45,7 +54,9 @@ export class VotingComponent implements OnInit {
    * Get all cat pictures
    */
   private getAllCatPictures(): void {
+    this.dataLoading = true;
     this.catService.getAllCatPictures()
+        .pipe(finalize(() => this.dataLoading = false))
         .subscribe({
           next  : res => {
             this.cats = res; // Store all cats
