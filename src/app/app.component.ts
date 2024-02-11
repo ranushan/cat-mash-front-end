@@ -14,7 +14,7 @@ export class AppComponent {
 
     // Header => Adding Menu on the left side home menu and leaderboard
     items: MenuItem[] = [
-        { iconName: 'home', name: 'Voting System', routerLink: 'voting' },
+        { iconName: 'home', name: 'Voting System', routerLink: '' },
         { iconName: 'bar_chart_4_bars', name: 'Leaderboard', routerLink: 'stats' },
     ];
 
