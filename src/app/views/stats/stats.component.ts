@@ -16,13 +16,13 @@ import { finalize } from 'rxjs';
   imports: [HttpClientModule, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatProgressSpinnerModule],
   providers: [CatService],
   template: `
-    @if(!dataLoading) {
-      <mat-form-field>
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. MTgwODA3MA" #input>
-      </mat-form-field>
-  
-      <div class="mat-elevation-z8">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. MTgwODA3MA" #input>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+      @if(!dataLoading) {
         <table mat-table [dataSource]="dataSource" matSort>
           <!-- ID Column -->
           <ng-container matColumnDef="id">
@@ -50,13 +50,13 @@ import { finalize } from 'rxjs';
             <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
           </tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of cat"></mat-paginator>
-      </div>
-    } @else {
-      <div style="display: flex; justify-content: center; align-items: center; text-align: center; min-height: 100vh;">
-        <mat-spinner></mat-spinner>
-      </div>
-    }
+      } @else {
+        <div style="display: flex; justify-content: center; align-items: center; text-align: center; min-height: 100vh;">
+          <mat-spinner></mat-spinner>
+        </div>
+      }
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of cat"></mat-paginator>
+    </div>
   `,
   styles: `
     table {
