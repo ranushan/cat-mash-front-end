@@ -78,7 +78,7 @@ export class StatsComponent implements OnInit {
   // SOURCING FOR TABLE
   displayedColumns: string[] = ['id', 'url', 'votes']; // Column you want to display
   dataSource!: MatTableDataSource<Cat>; // Source of data
-  dataLoading = false;
+  dataLoading = true;
 
   // Assign variable to element
   @ViewChild(MatPaginator) paginator!: MatPaginator; // Get node of paginator
@@ -96,7 +96,6 @@ export class StatsComponent implements OnInit {
    * Get all cat pictures
    */
   private getAllCatPictures(): void {
-    this.dataLoading = true;
     this.catService.getAllCatPictures()
         .pipe(finalize(() => this.dataLoading = false))
         .subscribe({

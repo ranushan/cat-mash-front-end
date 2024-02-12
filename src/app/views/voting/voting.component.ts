@@ -34,7 +34,7 @@ export class VotingComponent implements OnInit {
   // DECLARATION VARIABLES
   leftCat!: Cat;
   rightCat!: Cat;
-  dataLoading = false;
+  dataLoading = true;
 
   // STORING VALUE
   private cats!: Cat[];
@@ -54,7 +54,6 @@ export class VotingComponent implements OnInit {
    * Get all cat pictures
    */
   private getAllCatPictures(): void {
-    this.dataLoading = true;
     this.catService.getAllCatPictures()
         .pipe(finalize(() => this.dataLoading = false))
         .subscribe({
